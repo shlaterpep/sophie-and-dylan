@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sophie & Dylan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap">
+<style>
+/* Layout: wide framed card. Two-column hero (names left, drawing right), a four-cell details band, then two columns for the invitation and what is still to come. Stacks to one column on phones. */
+:root {
+  --paper: #fbe9e1;
+  --ink: #d82c24;
+  --line: #d82c2459;
+  --display: "Cormorant", "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --body: "Jost", "Helvetica Neue", Arial, sans-serif;
+  --pad: clamp(20px, 5vw, 64px);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background-color: var(--paper);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .75  0 0 0 0 .4  0 0 0 0 .35  0 0 0 .09 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 300;
+  padding-block: 14px 24px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing: antialiased;
+}
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+h1, h2, p, ul { margin: 0; }
+
+.card { max-width: 1080px; margin: 0 auto; border: 1.5px solid var(--ink); padding-top: clamp(28px, 5vw, 48px); }
+
+.tag { font-family: var(--body); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; }
+.top { text-align: center; font-size: clamp(1.15rem, 3.2vw, 1.55rem); text-transform: uppercase; letter-spacing: 0.02em; }
+.top em { font-style: italic; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; gap: clamp(28px, 5vw, 48px); padding: clamp(36px, 7vw, 80px) var(--pad) clamp(40px, 7vw, 72px); }
+.mark { margin: 0; line-height: 0; }
+.logo { display: block; width: 100%; max-width: 520px; height: auto; margin: 0 auto; }
+.when { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.date { font-size: clamp(2rem, 5vw, 3rem); display: flex; align-items: center; gap: 0.5em; line-height: 1; font-variant-numeric: lining-nums; }
+.date i { display: block; width: clamp(40px, 8vw, 80px); height: 1.5px; background: var(--ink); }
+.place { font-size: clamp(1.5rem, 3.4vw, 2.1rem); line-height: 1.1; }
+
+.hero > * { animation: rise 0.9s cubic-bezier(.2,.7,.2,1) backwards; }
+.hero > :nth-child(2) { animation-delay: .2s; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+
+/* Details band */
+.band { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; border-top: 1px solid var(--line); }
+.cell { padding: 30px 16px 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; min-width: 0; }
+.cell + .cell { border-left: 1px solid var(--line); }
+.cell .big { font-size: clamp(1.4rem, 2.6vw, 1.8rem); line-height: 1.15; font-weight: 400; }
+.cell small { font-family: var(--body); font-weight: 300; font-size: 0.82rem; letter-spacing: 0.04em; display: block; margin-top: 6px; }
+.cell .num { font-size: clamp(4rem, 8vw, 5.6rem); line-height: 0.9; font-weight: 300; font-variant-numeric: lining-nums tabular-nums; }
+.cell .num + small { margin-top: 10px; }
+
+/* Lower two columns */
+.lower { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.lower > section { padding: clamp(36px, 6vw, 64px) var(--pad); display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center; }
+.lower > section + section { border-left: 1px solid var(--line); }
+h2 { font-weight: 300; font-size: clamp(2rem, 4.4vw, 3rem); line-height: 1.05; text-wrap: balance; }
+h2 em { font-style: italic; }
+.lede { font-size: clamp(1.25rem, 2.6vw, 1.5rem); line-height: 1.35; font-weight: 400; max-width: 30ch; text-wrap: balance; }
+.btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 8px; }
+.btn { font-family: var(--body); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; color: var(--ink); border: 1.5px solid var(--ink); padding: 14px 22px; transition: background .2s, color .2s; }
+.btn:hover { background: var(--ink); color: var(--paper); }
+.soon { width: 100%; list-style: none; padding: 0; margin-top: 4px; }
+.soon li { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.soon li:first-child { border-top: 1px solid var(--line); }
+.soon b { font-weight: 400; font-size: clamp(1.35rem, 2.6vw, 1.7rem); }
+.soon span { font-family: var(--body); font-weight: 300; font-size: 0.85rem; letter-spacing: 0.04em; }
+
+/* Play */
+.flip { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; padding: 0; line-height: 0.9; transition: transform .25s cubic-bezier(.3,1.6,.5,1); }
+.flip:hover { transform: rotate(-3deg) scale(1.04); }
+.flip:active { transform: rotate(2deg) scale(.97); }
+.flip:focus-visible { outline: 2px solid var(--ink); outline-offset: 8px; }
+.cell .hint { font-style: italic; font-family: var(--display); font-size: 1rem; letter-spacing: 0; margin-top: 0; opacity: .85; }
+.squiggle { height: 34px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='72' height='34' viewBox='0 0 72 34' fill='none' stroke='%23d82c24' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'><path d='M0 17 Q9 5 18 17 T36 17'/><path d='M36 17 Q45 29 54 17 T72 17' opacity='.55'/></svg>") repeat-x center / 72px 34px; }
+.mark { cursor: pointer; transition: transform .4s cubic-bezier(.3,1.6,.5,1); }
+.mark:hover { transform: rotate(-1.5deg) scale(1.015); }
+.soon li { transition: padding .25s ease; }
+.soon li:hover { padding-block: 22px 14px; }
+.soon li:hover b { font-style: italic; }
+.heart { position: fixed; z-index: 50; pointer-events: none; font-size: 1.1rem; color: var(--ink); animation: pop 1.2s cubic-bezier(.2,.8,.3,1) forwards; }
+@keyframes pop { 0% { opacity: 1; transform: translate(0,0) scale(.4) rotate(0); } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.3) rotate(var(--rot)); } }
+
+@media (max-width: 860px) {
+  .band { grid-template-columns: 1fr 1fr; }
+  .cell:nth-child(3) { border-left: 0; }
+  .cell:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 700px) {
+  .logo { max-width: 420px; }
+  .lower { grid-template-columns: 1fr; }
+  .lower > section + section { border-left: 0; border-top: 1px solid var(--line); }
+}
+@media (max-width: 480px) {
+  .band { grid-template-columns: 1fr; }
+  .cell + .cell { border-left: 0; border-top: 1px solid var(--line); }
+}
+@media (prefers-reduced-motion: reduce) { .hero > * { animation: none; } html { scroll-behavior: auto; } .flip, .mark, .soon li { transition: none; } .flip:hover, .mark:hover { transform: none; } .heart { display: none; } }
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<main class="card">
+  <p class="top">We’re getting <em>married</em></p>
+
+  <header class="hero">
+    <h1 class="mark"><svg class="logo" viewBox="0 0 135 82" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sophie and Dylan">
+<path d="M17.2053 2.71432L18.0809 8.79966L17.7307 8.931C15.9357 3.72125 12.9587 2.27653 9.41257 2.27653C4.50928 2.27653 2.53921 5.16597 2.53921 8.14297C2.53921 12.8274 6.82959 14.2721 11.2075 16.1546C15.7168 18.0809 20.2699 20.2261 20.2699 26.0925C20.2699 32.3968 15.0601 34.7608 9.28123 34.7608C6.21667 34.7608 3.23968 34.1042 0.875588 33.0972L0 26.8806L0.350235 26.7492C2.32031 31.6963 5.12219 33.8853 10.1568 33.8853C15.3666 33.8853 17.9496 31.1709 17.9496 26.9681C17.9496 21.7146 13.8781 20.0072 9.58769 18.1685C5.16597 16.2859 0.70047 14.4472 0.70047 8.931C0.70047 3.98393 4.4655 1.40094 10.113 1.40094C12.8274 1.40094 15.3666 1.97007 17.2053 2.71432Z" fill="currentColor"/>
+<path d="M34.113 34.7608C28.2466 34.7608 23.3433 29.9013 23.3433 23.7284C23.3433 17.5555 28.2466 12.6522 34.113 12.6522C39.9795 12.6522 44.8828 17.5555 44.8828 23.7284C44.8828 29.9013 39.9795 34.7608 34.113 34.7608ZM34.113 33.9728C39.4541 33.9728 42.1685 29.4198 42.1685 23.7284C42.1685 18.0371 39.4104 13.4403 34.113 13.4403C28.8157 13.4403 26.0576 18.0371 26.0576 23.7284C26.0576 29.4198 28.772 33.9728 34.113 33.9728Z" fill="currentColor"/>
+<path d="M48.7583 43.9545V43.867C49.5901 42.3785 49.7214 41.0651 49.7214 38.7448V18.0809C49.7214 16.4173 48.7583 15.4103 47.7951 14.7974V14.7099L51.7353 12.4333V16.3297L52.0417 16.3735C53.6178 13.8343 56.3759 12.6522 59.2216 12.6522C64.5626 12.6522 68.459 16.7675 68.459 23.1155C68.459 29.0257 65.0004 34.7608 57.6017 34.7608C54.6685 34.7608 53.0487 33.929 51.9104 33.0535V38.701C51.9104 41.0213 51.9542 42.3785 52.8735 43.867V43.9545H48.7583ZM57.8206 33.9728C62.6363 33.9728 65.9198 29.9451 65.9198 23.5971C65.9198 17.5118 62.4612 14.1407 58.2584 14.1407C55.4127 14.1407 52.9611 15.7168 51.9104 17.2929V31.0834C53.3113 32.9221 55.369 33.9728 57.8206 33.9728Z" fill="currentColor"/>
+<path d="M71.9306 34.1042V34.0166C72.7624 32.5281 72.8937 31.2147 72.8937 28.8944V5.20975C72.8937 3.54613 71.9306 2.53921 70.9674 1.92629V1.83873L75.0827 0V16.4611C77.3154 13.8343 80.1611 12.6522 82.963 12.6522C87.0345 12.6522 89.0921 15.1039 89.0921 19.044V28.8506C89.0921 31.2585 89.1359 32.5281 90.0552 34.0166V34.1042H85.94V34.0166C86.7718 32.5281 86.9031 31.0834 86.9031 28.8944V19.5256C86.9031 16.6362 85.6773 14.3596 81.9998 14.3596C79.7233 14.3596 77.0965 15.1477 75.0827 17.2491V28.8944C75.0827 31.1709 75.1265 32.5281 76.0458 34.0166V34.1042H71.9306Z" fill="currentColor"/>
+<path d="M96.0458 7.04848C95.0827 7.04848 94.2509 6.26045 94.2509 5.25353C94.2509 4.2466 95.0827 3.45857 96.0458 3.45857C97.0528 3.45857 97.8408 4.2466 97.8408 5.25353C97.8408 6.26045 97.0528 7.04848 96.0458 7.04848ZM94.1195 34.1042V34.0166C94.9076 32.5281 95.0827 31.1709 95.0827 28.8944V18.0371C95.0827 16.4173 94.1195 15.4103 93.1564 14.7974V14.7099L97.2717 12.4333V28.8506C97.2717 31.1709 97.3154 32.5281 98.2348 34.0166V34.1042H94.1195Z" fill="currentColor"/>
+<path d="M111.916 32.747C114.63 32.747 117.651 31.6525 119.139 29.1571L119.358 29.2446C118.264 32.5281 115.199 34.7608 111.128 34.7608C105.48 34.7608 101.715 30.4267 101.715 24.0349C101.715 17.1177 106.225 12.6522 111.478 12.6522C116.513 12.6522 119.533 16.7237 119.227 21.0579H104.254C104.167 21.6708 104.123 22.3713 104.123 23.0717C104.123 28.6755 106.706 32.747 111.916 32.747ZM111.347 13.4403C107.669 13.4403 105.086 15.9795 104.342 20.4012L116.469 20.1385V19.8759C116.469 15.4541 114.63 13.4403 111.347 13.4403Z" fill="currentColor"/>
+<path d="M37.94 71.8542V71.7666C39.3847 69.5776 39.6912 68.3518 39.6912 65.4624V46.1994C39.6912 43.31 39.3847 42.0842 37.94 39.8952V39.8076C43.8064 39.8076 44.2442 39.6325 50.242 39.6325C59.6108 39.6325 65.3021 45.3238 65.3021 55.6996C65.3021 66.0753 59.567 71.8542 49.3664 71.8542H37.94ZM62.4127 56.3125C62.4127 45.499 58.1223 40.5519 49.8042 40.5081L42.0553 40.4643V71.0224L48.9286 70.9786C58.6039 70.9348 62.4127 65.8564 62.4127 56.3125Z" fill="currentColor"/>
+<path d="M68.8626 81.7045L68.7751 79.2967C70.3073 79.2529 73.8973 78.2022 75.4295 74.1745L76.524 71.3288L70.4825 55.612C69.5193 53.1166 68.994 51.9783 67.8995 51.1465V51.0589H73.0217V51.1465C72.1023 51.9783 71.8834 53.2041 72.8028 55.6996L77.6185 68.4831L82.3467 56.0498C83.3098 53.4668 83.1785 51.9783 81.8213 51.1465V51.0589H86.1555V51.1465C84.7983 52.1534 84.3605 53.029 83.3536 55.6996L75.7798 75.4003C74.1162 79.7344 71.9272 81.3543 68.8626 81.7045Z" fill="currentColor"/>
+<path d="M87.8779 71.8542V71.7666C88.7097 70.2781 88.8411 68.9209 88.8411 66.6444V42.3906C88.8411 40.9897 87.8779 40.2016 86.9148 39.6763V39.5887L91.03 37.75V66.6006C91.03 68.8772 91.0738 70.2781 91.9932 71.7666V71.8542H87.8779Z" fill="currentColor"/>
+<path d="M100.98 72.5108C97.915 72.5108 95.8574 70.8472 95.8574 68.0453C95.8574 62.9232 102.906 60.6466 107.897 60.2088V56.1811C107.897 53.817 106.802 51.7156 102.95 51.7156C100.586 51.7156 98.3091 52.5912 96.8206 53.6419L96.6017 53.3355C98.3528 51.5843 101.023 50.4022 104.219 50.4022C109.079 50.4022 110.086 52.9852 110.086 55.7433V68.9647C110.086 70.103 110.611 70.8472 111.793 70.8472C112.8 70.8472 113.413 70.2781 113.895 69.7965L114.026 69.8841C113.719 70.8472 112.756 72.3795 110.699 72.3795C108.772 72.3795 107.897 71.0661 107.897 69.4025C106.364 71.0223 103.825 72.5108 100.98 72.5108ZM98.0902 67.4324C98.0902 69.4463 99.316 70.9348 102.03 70.9348C104.394 70.9348 106.671 69.8841 107.897 68.6583V60.9093C103.169 61.5222 98.0902 63.361 98.0902 67.4324Z" fill="currentColor"/>
+<path d="M115.967 71.8542V71.7666C116.799 70.2781 116.93 68.9647 116.93 66.6444V55.8309C116.93 54.1673 115.967 53.1603 115.004 52.5474V52.4599L118.944 50.1833V54.1673L119.119 54.2111C121.352 51.5843 124.197 50.4022 126.999 50.4022C131.071 50.4022 133.128 52.8539 133.128 56.794V66.6006C133.128 69.0085 133.172 70.2781 134.092 71.7666V71.8542H129.976V71.7666C130.808 70.2781 130.939 68.8334 130.939 66.6444V57.2756C130.939 54.3862 129.714 52.1096 126.036 52.1096C123.716 52.1096 121.001 52.9415 119.119 54.9991V66.6006C119.119 68.9209 119.163 70.2781 120.082 71.7666V71.8542H115.967Z" fill="currentColor"/>
+<path d="M29.4093 33.5643C32.0894 33.4257 30.8726 35.6733 29.9689 36.9406C27.22 40.8012 23.3829 43.7308 19.7879 46.7461C19.4111 47.0621 19.221 47.8393 19.0625 48.3166C18.1328 51.1449 17.5843 54.0855 17.4316 57.06C17.2384 60.3768 17.6102 63.0962 19.8866 65.6602C21.9301 64.4776 23.9199 63.2032 25.8494 61.8408C27.7907 60.4946 29.4723 59.2777 31.2993 57.751C32.2014 56.9924 33.0792 56.2048 33.9315 55.3899C34.377 54.9662 35.7422 53.4588 36.3114 53.5346C37.2853 54.1245 33.6441 56.5446 33.256 56.8376C30.5263 58.8975 27.9303 61.19 25.1028 63.1178C24.0366 63.8488 22.9376 64.5304 21.8094 65.1605C21.3081 65.4468 20.72 65.79 20.2056 66.041L20.2282 66.0684C21.6512 67.7921 23.6999 68.8744 25.9205 69.0753C28.2287 69.3316 29.8668 68.6945 31.9019 67.7405C32.0795 67.6571 32.7463 67.4466 32.7898 67.756C32.7556 67.8262 32.7103 67.8942 32.6435 67.9382C30.4914 69.3601 27.5286 70.0024 25.0032 69.7642C22.5919 69.5368 20.6915 68.4236 19.2033 66.5923C15.2276 68.9525 10.6639 71.1882 6.0018 71.4827C3.89097 71.6159 1.34701 70.5249 1.46286 68.1201C1.65499 64.1327 5.81499 60.071 8.42344 57.4292L11.2462 54.5625L17.6939 47.9914C17.8508 47.3353 18.0179 46.5946 18.2381 45.9602C19.1354 43.3779 20.6343 40.5317 22.3336 38.4057C23.9339 36.4039 26.7417 33.8473 29.4093 33.5643ZM5.2237 70.7544C5.92863 70.8465 6.69475 70.7987 7.40023 70.7071C10.7298 70.2751 13.8858 68.8502 16.8358 67.3035C17.484 66.9635 18.2631 66.5588 18.8895 66.185C18.0346 64.9651 17.5372 63.728 17.1096 62.3052C16.5607 60.4792 16.5142 58.7249 16.5068 56.8361C16.4978 54.9369 16.6493 53.0403 16.9597 51.1668C17.0645 50.5596 17.194 49.9496 17.309 49.3434L17.2869 49.3259C16.2294 50.3953 15.1074 51.4386 14.0373 52.5039C12.1505 54.3868 10.3175 56.3233 8.54042 58.3111C6.97651 60.08 5.42892 61.8693 4.29099 63.9514C3.58072 65.2509 2.79176 66.727 2.78358 68.2394C2.77519 69.7946 3.79419 70.5832 5.2237 70.7544ZM19.8732 46.0754L20.2851 45.7468C23.5713 43.1436 26.5356 40.3519 28.8732 36.8395C29.1538 36.4175 31.0804 33.4825 29.3872 33.8555C27.4859 34.0801 25.3498 36.1853 24.2189 37.6148C22.4808 39.8116 21.3191 42.3541 20.3101 44.9503C20.1658 45.321 20.0012 45.6969 19.8732 46.0754Z" fill="currentColor"/>
+</svg></h1>
+    <div class="when">
+      <p class="date"><span>28.08</span><i aria-hidden="true"></i><span>2027</span></p>
+      <p class="place">Mountain View, Kilkenny</p>
+    </div>
+  </header>
+
+  <div class="band">
+    <div class="cell"><p class="tag">Until we say I do</p><button class="flip" id="flip" type="button" aria-live="polite" aria-label="Change how the countdown is counted"><span class="num" id="days">312</span></button><small id="unit">days to go</small><small class="hint">Tap the number to count it differently</small></div>
+    <div class="cell"><p class="tag">Date</p><p class="big">Saturday<small>28 August 2027</small></p></div>
+    <div class="cell"><p class="tag">Place</p><p class="big">Mountain View<small>Kilkenny, Ireland</small></p></div>
+    <div class="cell"><p class="tag">Invitation</p><p class="big">To follow<small>Formal invitations to follow</small></p></div>
+  </div>
+
+  <div class="squiggle" aria-hidden="true"></div>
+
+  <div class="lower">
+    <section aria-labelledby="day-h">
+      <h2 id="day-h">Join us in <em>Kilkenny</em></h2>
+      <p class="lede">Clear the diary, pack your dancing shoes and come and celebrate with us.</p>
+      <div class="btns">
+        <a class="btn" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Sophie%20%26%20Dylan%27s%20Wedding&amp;dates=20270828/20270829&amp;location=Mountain%20View%2C%20Kilkenny&amp;details=Save%20the%20date.%20Formal%20invitations%20to%20follow.">Add to calendar</a>
+        <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=Mountain%20View%2C%20Kilkenny">View the map</a>
+      </div>
+    </section>
+    <section aria-labelledby="more-h">
+      <h2 id="more-h">More <em>to come</em></h2>
+      <ul class="soon">
+        <li><b>RSVP</b><span>With your invitation</span></li>
+        <li><b>Getting there</b><span>Watch this space</span></li>
+        <li><b>Where to stay</b><span>Watch this space</span></li>
+        <li><b>The day</b><span>Watch this space</span></li>
+      </ul>
+    </section>
+  </div>
+
+</main>
+
+<script>
+(function () {
+  try {
+    var target = new Date(2027, 7, 28);
+    var num = document.getElementById('days');
+    var unit = document.getElementById('unit');
+    var flip = document.getElementById('flip');
+    var hint = document.querySelector('.hint');
+    var mode = 0;
+    var modes = ['days', 'sleeps', 'weeks', 'hours'];
+    function fmt(n) { return n.toLocaleString('en-IE'); }
+    function render() {
+      var now = new Date();
+      var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      var d = Math.round((target - today) / 86400000);
+      if (d < 2) {
+        flip.disabled = true; hint.hidden = true;
+        if (d === 1) { num.textContent = '1'; unit.textContent = 'sleep to go'; }
+        else if (d === 0) { num.textContent = 'Today'; unit.textContent = 'Welcome to the wedding'; }
+        else { num.textContent = 'Married'; unit.textContent = 'Thank you for celebrating with us'; }
+        return;
+      }
+      var m = modes[mode];
+      if (m === 'days') { num.textContent = fmt(d); unit.textContent = 'days to go'; }
+      else if (m === 'sleeps') { num.textContent = fmt(d); unit.textContent = 'sleeps to go'; }
+      else if (m === 'weeks') {
+        var w = Math.floor(d / 7), rem = d % 7;
+        num.textContent = fmt(w);
+        unit.textContent = 'weeks' + (rem ? ' and ' + rem + (rem === 1 ? ' day' : ' days') : '') + ' to go';
+      } else {
+        num.textContent = fmt(Math.max(0, Math.round((target - now) / 3600000)));
+        unit.textContent = 'hours to go';
+      }
+    }
+    render();
+    flip.addEventListener('click', function () { mode = (mode + 1) % modes.length; render(); });
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var mark = document.querySelector('.mark');
+    mark.addEventListener('click', function (ev) {
+      if (reduce) return;
+      var box = mark.getBoundingClientRect();
+      var x = ev.clientX || box.left + box.width / 2;
+      var y = ev.clientY || box.top + box.height / 2;
+      for (var i = 0; i < 22; i++) {
+        var h = document.createElement('span');
+        h.className = 'heart';
+        h.textContent = i % 3 === 0 ? '\u2665' : '\u2022';
+        var a = Math.random() * Math.PI * 2, dist = 60 + Math.random() * 120;
+        h.style.left = x + 'px'; h.style.top = y + 'px';
+        h.style.setProperty('--dx', Math.cos(a) * dist + 'px');
+        h.style.setProperty('--dy', Math.sin(a) * dist - 40 + 'px');
+        h.style.setProperty('--rot', (Math.random() * 120 - 60) + 'deg');
+        document.body.appendChild(h);
+        setTimeout(function (el) { el.remove(); }.bind(null, h), 1300);
+      }
+    });
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>
