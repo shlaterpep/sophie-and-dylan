@@ -35,7 +35,7 @@ body {
 a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 h1, h2, p, ul { margin: 0; }
 
-.card { max-width: 1080px; margin: 0 auto; border: 1.5px solid var(--ink); padding-top: clamp(28px, 5vw, 48px); }
+.card { max-width: 1080px; margin: 0 auto; border: 1.5px solid var(--ink); }
 
 .tag { font-family: var(--body); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; }
 .top { text-align: center; font-size: clamp(1.15rem, 3.2vw, 1.55rem); text-transform: uppercase; letter-spacing: 0.02em; }
@@ -53,6 +53,13 @@ h1, h2, p, ul { margin: 0; }
 .hero > * { animation: rise 0.9s cubic-bezier(.2,.7,.2,1) backwards; }
 .hero > :nth-child(2) { animation-delay: .2s; }
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+
+/* First screen fills the phone */
+.first { min-height: calc(100vh - 38px); min-height: calc(100svh - 38px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; padding-top: clamp(28px, 5vw, 48px); }
+.first .hero { flex: 1; align-content: center; padding-bottom: clamp(16px, 4vw, 32px); }
+.cue { align-self: center; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 16px clamp(18px, 4vw, 28px); color: var(--ink); text-decoration: none; }
+.cue svg { animation: nudge 1.6s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 
 /* Details band */
 .band { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; border-top: 1px solid var(--line); }
@@ -78,6 +85,14 @@ h2 em { font-style: italic; }
 .soon li:first-child { border-top: 1px solid var(--line); }
 .soon b { font-weight: 400; font-size: clamp(1.35rem, 2.6vw, 1.7rem); }
 .soon span { font-family: var(--body); font-weight: 300; font-size: 0.85rem; letter-spacing: 0.04em; }
+
+/* Calendar chooser */
+.btn { background: transparent; cursor: pointer; }
+.calmenu { flex-basis: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 14px; }
+.calopts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.calopt { font-family: var(--display); font-style: italic; font-weight: 400; font-size: 1.3rem; text-decoration: none; color: var(--ink); background: transparent; border: 0; border-bottom: 1.5px solid var(--ink); padding: 4px 6px; cursor: pointer; transition: background .2s, color .2s; }
+.calopt:hover { background: var(--ink); color: var(--paper); }
+.calopt:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
 /* Play */
 .flip { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; padding: 0; line-height: 0.9; transition: transform .25s cubic-bezier(.3,1.6,.5,1); }
@@ -108,12 +123,13 @@ h2 em { font-style: italic; }
   .band { grid-template-columns: 1fr; }
   .cell + .cell { border-left: 0; border-top: 1px solid var(--line); }
 }
-@media (prefers-reduced-motion: reduce) { .hero > * { animation: none; } html { scroll-behavior: auto; } .flip, .mark, .soon li { transition: none; } .flip:hover, .mark:hover { transform: none; } .heart { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hero > * { animation: none; } html { scroll-behavior: auto; } .flip, .mark, .soon li { transition: none; } .cue svg { animation: none; } .flip:hover, .mark:hover { transform: none; } .heart { display: none; } }
 </style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
 <main class="card">
+  <div class="first">
   <p class="top">We’re getting <em>married</em></p>
 
   <header class="hero">
@@ -137,7 +153,10 @@ h2 em { font-style: italic; }
     </div>
   </header>
 
-  <div class="band">
+  <a class="cue" href="#details"><span class="tag">Scroll</span><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg></a>
+  </div>
+
+  <div class="band" id="details">
     <div class="cell"><p class="tag">Until we say I do</p><button class="flip" id="flip" type="button" aria-live="polite" aria-label="Change how the countdown is counted"><span class="num" id="days">312</span></button><small id="unit">days to go</small><small class="hint">Tap the number to count it differently</small></div>
     <div class="cell"><p class="tag">Date</p><p class="big">Saturday<small>28 August 2027</small></p></div>
     <div class="cell"><p class="tag">Place</p><p class="big">Mountain View<small>Kilkenny, Ireland</small></p></div>
@@ -151,8 +170,16 @@ h2 em { font-style: italic; }
       <h2 id="day-h">Join us in <em>Kilkenny</em></h2>
       <p class="lede">Clear the diary, pack your dancing shoes and come and celebrate with us.</p>
       <div class="btns">
-        <a class="btn" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Sophie%20%26%20Dylan%27s%20Wedding&amp;dates=20270828/20270829&amp;location=Mountain%20View%2C%20Kilkenny&amp;details=Save%20the%20date.%20Formal%20invitations%20to%20follow.">Add to calendar</a>
+        <button class="btn" type="button" id="calbtn" aria-expanded="false" aria-controls="calmenu">Add to calendar</button>
         <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=Mountain%20View%2C%20Kilkenny">View the map</a>
+        <div class="calmenu" id="calmenu" hidden>
+          <p class="tag">Which calendar?</p>
+          <div class="calopts">
+            <button class="calopt" type="button" id="cal-apple">Apple</button>
+            <a class="calopt" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Sophie%20%26%20Dylan%27s%20Wedding&amp;dates=20270828/20270829&amp;location=Mountain%20View%2C%20Kilkenny&amp;details=Formal%20invitations%20to%20follow.">Google</a>
+            <a class="calopt" target="_blank" rel="noopener" href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&amp;rru=addevent&amp;subject=Sophie%20%26%20Dylan%27s%20Wedding&amp;startdt=2027-08-28&amp;enddt=2027-08-29&amp;allday=true&amp;location=Mountain%20View%2C%20Kilkenny&amp;body=Formal%20invitations%20to%20follow.">Outlook</a>
+          </div>
+        </div>
       </div>
     </section>
     <section aria-labelledby="more-h">
@@ -177,7 +204,7 @@ h2 em { font-style: italic; }
     var flip = document.getElementById('flip');
     var hint = document.querySelector('.hint');
     var mode = 0;
-    var modes = ['days', 'sleeps', 'weeks', 'hours'];
+    var modes = ['days', 'weeks', 'hours'];
     function fmt(n) { return n.toLocaleString('en-IE'); }
     function render() {
       var now = new Date();
@@ -185,14 +212,13 @@ h2 em { font-style: italic; }
       var d = Math.round((target - today) / 86400000);
       if (d < 2) {
         flip.disabled = true; hint.hidden = true;
-        if (d === 1) { num.textContent = '1'; unit.textContent = 'sleep to go'; }
+        if (d === 1) { num.textContent = '1'; unit.textContent = 'day to go'; }
         else if (d === 0) { num.textContent = 'Today'; unit.textContent = 'Welcome to the wedding'; }
         else { num.textContent = 'Married'; unit.textContent = 'Thank you for celebrating with us'; }
         return;
       }
       var m = modes[mode];
       if (m === 'days') { num.textContent = fmt(d); unit.textContent = 'days to go'; }
-      else if (m === 'sleeps') { num.textContent = fmt(d); unit.textContent = 'sleeps to go'; }
       else if (m === 'weeks') {
         var w = Math.floor(d / 7), rem = d % 7;
         num.textContent = fmt(w);
@@ -204,6 +230,35 @@ h2 em { font-style: italic; }
     }
     render();
     flip.addEventListener('click', function () { mode = (mode + 1) % modes.length; render(); });
+
+    var calbtn = document.getElementById('calbtn');
+    var calmenu = document.getElementById('calmenu');
+    calbtn.addEventListener('click', function () {
+      var open = calmenu.hidden;
+      calmenu.hidden = !open;
+      calbtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.getElementById('cal-apple').addEventListener('click', function () {
+      var ics = [
+        'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Sophie and Dylan//Wedding//EN', 'CALSCALE:GREGORIAN',
+        'BEGIN:VEVENT',
+        'UID:sophie-dylan-wedding-20270828@wedding',
+        'DTSTAMP:20261020T000000Z',
+        'DTSTART;VALUE=DATE:20270828',
+        'DTEND;VALUE=DATE:20270829',
+        'SUMMARY:Sophie & Dylan\'s Wedding',
+        'LOCATION:Mountain View\\, Kilkenny',
+        'DESCRIPTION:Formal invitations to follow.',
+        'END:VEVENT', 'END:VCALENDAR'
+      ].join('\r\n');
+      var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'sophie-and-dylan-wedding.ics';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    });
 
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var mark = document.querySelector('.mark');
